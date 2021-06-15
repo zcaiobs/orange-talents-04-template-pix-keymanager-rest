@@ -1,0 +1,134 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "br.com.orange";
+option java_outer_classname = "KeyManager";
+
+package br.com.orange;
+
+service KeyManagerRegisterService {
+  rpc register (KeyManagerRequest) returns (KeyManagerReply) {};
+}
+
+service KeyManagerRemoveService {
+  rpc remove (KeyManagerRemoveRequest) returns (KeyManagerRemoveReply) {};
+}
+
+service KeyManagerFindService {
+  rpc find (KeyManagerFindRequest) returns (KeyManagerFindReply) {};
+}
+
+service KeyManagerFindAllService {
+  rpc findAll (KeyManagerFindAllRequest) returns (KeyManagerFindAllReply) {};
+}
+
+message KeyManagerFindAllRequest {
+  string clienteId = 1;
+}
+
+message KeyManagerFindAllReply {
+
+  string clienteId = 1;
+  repeated ListaDeChaves chaves = 2;
+
+  message ListaDeChaves {
+    string pixId = 1;
+    Key keyType = 2;
+    string keyValue = 3;
+    Account conta = 4;
+    string created = 5;
+  }
+
+
+
+  enum Account {
+    CONTA_CORRENTE = 0;
+    CONTA_POUPANCA = 1;
+  }
+
+  enum Key {
+    CPF = 0;
+    PHONE = 1;
+    EMAIL = 2;
+    RANDOM = 3;
+  }
+}
+
+message KeyManagerFindRequest {
+  message KeyManagerFind {
+    string clientId = 1;
+    string idPix = 2;
+  }
+  oneof filtro {
+    KeyManagerFind keymanagerFind = 1;
+    string keyValue = 2;
+  }
+}
+
+message KeyManagerFindReply {
+  string idPix = 2;
+  string clientId = 1;
+  Key keyType = 3;
+  string keyValue = 4;
+  Titular titular = 5;
+  InstituicaoFinanceira conta = 6;
+  string criadoEm = 7;
+
+  message InstituicaoFinanceira {
+    string nome = 1;
+    string agencia = 2;
+    string conta = 3;
+    Account tipo = 4;
+
+    enum Account {
+      CONTA_CORRENTE = 0;
+      CONTA_POUPANCA = 1;
+    }
+  }
+
+  message Titular {
+    string name = 1;
+    string cpf = 2;
+  }
+
+  enum Key {
+    CPF = 0;
+    PHONE = 1;
+    EMAIL = 2;
+    RANDOM = 3;
+  }
+
+}
+
+message KeyManagerRemoveRequest {
+  string clientId = 1;
+  string idPix = 2;
+}
+
+message KeyManagerRemoveReply {
+  string message = 1;
+}
+
+message KeyManagerRequest {
+  string clientId = 1;
+  Key keyType = 2;
+  string keyValue = 3;
+  Account accountType = 4;
+
+  enum Key {
+    CPF = 0;
+    PHONE = 1;
+    EMAIL = 2;
+    RANDOM = 3;
+  }
+
+  enum Account {
+      CONTA_CORRENTE = 0;
+      CONTA_POUPANCA = 1;
+  }
+}
+
+message KeyManagerReply {
+  string message = 1;
+  string idPix = 2;
+}
