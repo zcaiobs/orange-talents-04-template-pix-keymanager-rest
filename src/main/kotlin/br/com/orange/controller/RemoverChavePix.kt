@@ -11,7 +11,7 @@ import javax.validation.Valid
 
 @Controller("/api/pix")
 @Validated
-class RemoverChavePix(val removeChaveClient: KeyManagerRemoveServiceBlockingStub) {
+class RemoverChavePix(private val removeChaveClient: KeyManagerRemoveServiceBlockingStub) {
 
     @Delete
     fun remover(@Valid removerChaveRequest: RemoverChaveRequest): HttpResponse<Any> {

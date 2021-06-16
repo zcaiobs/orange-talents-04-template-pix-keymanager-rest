@@ -10,7 +10,7 @@ import javax.validation.Valid
 
 @Controller("/api/pix")
 @Validated
-class RegistrarChavePix(val registraChaveClient: KeyManagerRegisterServiceBlockingStub) {
+class RegistrarChavePix(private val registraChaveClient: KeyManagerRegisterServiceBlockingStub) {
 
     @Post
     fun registrar(@Valid registraChaveRequest: RegistrarChaveRequest): HttpResponse<String> {
