@@ -2,6 +2,7 @@ package br.com.orange.controller
 
 import br.com.orange.KeyManagerFindRequest
 import br.com.orange.KeyManagerFindServiceGrpc.*
+import br.com.orange.domain.ConsultaChaveResponse
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.*
 
@@ -17,6 +18,8 @@ class ConsultaChavePix(private val consultarChaveClient: KeyManagerFindServiceBl
                 .setIdPix(pixId))
             .build())
 
-        return HttpResponse.ok(result.toString())
+        val resp = ConsultaChaveResponse(result)
+
+        return HttpResponse.ok(resp)
     }
 }

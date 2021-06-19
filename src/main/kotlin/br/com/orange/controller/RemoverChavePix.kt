@@ -1,6 +1,7 @@
 package br.com.orange.controller
 
 import br.com.orange.KeyManagerRemoveServiceGrpc.*
+import br.com.orange.domain.RemoveChaveResponse
 import br.com.orange.domain.RemoverChaveRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Controller
@@ -17,7 +18,8 @@ class RemoverChavePix(private val removeChaveClient: KeyManagerRemoveServiceBloc
     fun remover(@Valid removerChaveRequest: RemoverChaveRequest): HttpResponse<Any> {
         return try {
             val result = removeChaveClient.remove(removerChaveRequest.toGrpc())
-            HttpResponse.ok(result.message)
+            val resp = RemoveChaveResponse(result.deletedAt)
+            HttpResponse.ok(resp)
         } catch (ex: Exception) {
             HttpResponse.notFound()
         }
