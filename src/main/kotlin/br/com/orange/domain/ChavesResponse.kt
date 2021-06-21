@@ -1,11 +1,17 @@
 package br.com.orange.domain
 
 import br.com.orange.KeyManagerFindAllReply
+import io.micronaut.core.annotation.Introspected
 
-class ChavesResponse(key: KeyManagerFindAllReply.ListaDeChaves) {
-    val pixId: String = key.pixId
-    val keyType: String = key.keyType.name
-    val keyValue: String = key.keyValue
-    val account: String = key.conta.name
-    val created: String = key.created
+@Introspected
+data class ChavesResponse(val pixId: String, val keyType: String, val keyValue: String, val account: String, val created: String){
+    companion object {
+        fun toResponse(key: KeyManagerFindAllReply.ListaDeChaves): ChavesResponse {
+            return ChavesResponse(key.pixId, key.keyType.name, key.keyValue, key.conta.name, key.created)
+        }
+    }
 }
+
+
+
+

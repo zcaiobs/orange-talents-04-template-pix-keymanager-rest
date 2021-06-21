@@ -20,7 +20,7 @@ class ListarChavePix(private val listarChaveClient: KeyManagerFindAllServiceBloc
                 .build()
         )
 
-        val resp = ListarChaveResponse(result)
+        val resp = ListarChaveResponse.toResponse(result)
 
         return if (resp.keyList.isNotEmpty()) {
             HttpResponse.ok(resp)
