@@ -18,7 +18,7 @@ class ConsultaChavePix(private val consultarChaveClient: KeyManagerFindServiceBl
                 .setIdPix(pixId))
             .build())
 
-        val resp = ConsultaChaveResponse(result)
+        val resp = ConsultaChaveResponse.toResponse(result)
 
         return HttpResponse.ok(resp)
     }

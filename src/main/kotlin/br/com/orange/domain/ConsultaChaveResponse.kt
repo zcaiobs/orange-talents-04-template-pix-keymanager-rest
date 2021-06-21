@@ -1,24 +1,32 @@
 package br.com.orange.domain
 
 import br.com.orange.KeyManagerFindReply
+import io.micronaut.core.annotation.Introspected
 
-class ConsultaChaveResponse(keyManagerFindReply: KeyManagerFindReply) {
-    val clientId: String = keyManagerFindReply.clientId
-    val idPix: String = keyManagerFindReply.idPix
-    val keyType: String = keyManagerFindReply.keyType.name
-    val keyValue: String = keyManagerFindReply.keyValue
-    val titular: Titular = Titular(
-        keyManagerFindReply.titular.name,
-        keyManagerFindReply.titular.cpf
-    )
-    val conta: Conta = Conta(
-        keyManagerFindReply.conta.nome,
-        keyManagerFindReply.conta.agencia,
-        keyManagerFindReply.conta.conta,
-        keyManagerFindReply.conta.tipo.name
-    )
-    val criadoEm: String = keyManagerFindReply.criadoEm
-
+@Introspected
+data class ConsultaChaveResponse (
+    var clientId: String,
+    var idPix: String,
+    var keyType: String,
+    var keyValue: String,
+    var titular: Titular,
+    var conta: Conta,
+    var criadoEm: String
+) {
     class Titular(val nome: String, val cpf: String)
     class Conta(val nome: String, val agencia: String, val conta: String, val tipo: String)
+
+    companion object {
+        fun toResponse(key: KeyManagerFindReply): ConsultaChaveResponse {
+            return ConsultaChaveResponse(
+                key.clientId,
+                key.idPix,
+                key.keyType.name,
+                key.keyValue,
+                Titular(key.titular.name, key.titular.cpf),
+                Conta(key.conta.nome, key.conta.agencia, key.conta.conta, key.conta.tipo.name),
+                key.criadoEm
+            )
+        }
+    }
 }

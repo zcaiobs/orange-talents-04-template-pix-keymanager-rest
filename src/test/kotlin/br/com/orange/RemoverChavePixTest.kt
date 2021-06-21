@@ -6,8 +6,10 @@ import org.mockito.Mockito
 import br.com.orange.KeyManagerRemoveServiceGrpc.*
 import br.com.orange.domain.RemoveChaveResponse
 import br.com.orange.domain.RemoverChaveRequest
+import io.grpc.Status
 import io.micronaut.context.annotation.Replaces
 import io.micronaut.http.HttpRequest
+import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.annotation.Client
 import org.junit.jupiter.api.Assertions
